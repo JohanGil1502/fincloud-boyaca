@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinCloud Boyacá — Consultoría Cloud</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #0B1F3A;
+    --blue:   #1A4A8A;
+    --accent: #2E8BFF;
+    --gold:   #F0B429;
+    --light:  #E8F0FA;
+    --white:  #FFFFFF;
+    --gray:   #6B7A99;
+    --border: rgba(46,139,255,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── GRID TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(46,139,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,139,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(11,31,58,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 5rem;
+    z-index: 1;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(46,139,255,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-content { max-width: 780px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(46,139,255,0.12);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.4; transform: scale(1.4); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 .highlight {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.6);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--accent);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .hero-cta:hover { background: #1a7ae0; transform: translateY(-2px); }
+
+  /* ── SECTION BASE ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 4rem;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 1rem;
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 3.5rem;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 4rem;
+  }
+
+  /* ── PROYECTO ── */
+  .proyecto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .proyecto-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .proyecto-card:hover {
+    border-color: rgba(46,139,255,0.4);
+    background: rgba(46,139,255,0.05);
+  }
+
+  .proyecto-card.full { grid-column: 1 / -1; }
+
+  .card-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: rgba(46,139,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.65;
+  }
+
+  .tag {
+    display: inline-block;
+    background: rgba(240,180,41,0.12);
+    border: 1px solid rgba(240,180,41,0.25);
+    color: var(--gold);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.7rem;
+    border-radius: 100px;
+    margin-top: 1rem;
+  }
+
+  /* ── ARQUITECTURA ── */
+  .arq-section { background: rgba(255,255,255,0.015); }
+
+  .layers {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .layer {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem 2rem;
+    transition: border-color 0.2s;
+  }
+
+  .layer:hover { border-color: rgba(46,139,255,0.35); }
+
+  .layer-badge {
+    flex-shrink: 0;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    min-width: 80px;
+    text-align: center;
+  }
+
+  .layer-badge.edge  { background: rgba(46,139,255,0.2); color: #7ab8ff; border: 1px solid rgba(46,139,255,0.3); }
+  .layer-badge.fog   { background: rgba(126,87,194,0.2); color: #b39ddb; border: 1px solid rgba(126,87,194,0.3); }
+  .layer-badge.cloud { background: rgba(240,180,41,0.15); color: var(--gold); border: 1px solid rgba(240,180,41,0.25); }
+
+  .layer-info { flex: 1; }
+
+  .layer-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .layer-desc {
+    font-size: 0.87rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+  }
+
+  .layer-components {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .chip {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* ── EQUIPO ── */
+  .equipo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+  }
+
+  .miembro {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .miembro:hover {
+    border-color: rgba(46,139,255,0.4);
+    transform: translateY(-4px);
+  }
+
+  .avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: 0 auto 1.2rem;
+    border: 2px solid var(--border);
+  }
+
+  .miembro-nombre {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .miembro-rol {
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+  }
+
+  .miembro-resp {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+  }
+
+  /* ── REGULACION ── */
+  .reg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  .reg-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    border-top: 3px solid var(--accent);
+    transition: transform 0.2s;
+  }
+
+  .reg-card:hover { transform: translateY(-3px); }
+
+  .reg-nombre {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+  }
+
+  .reg-desc {
+    font-size: 0.87rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  .footer-text {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-links a {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeIn 0.7s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .fade-in:nth-child(2) { animation-delay: 0.2s; }
+  .fade-in:nth-child(3) { animation-delay: 0.3s; }
+  .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 2rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 2rem; }
+    .hero { padding: 7rem 2rem 4rem; }
+    .proyecto-grid { grid-template-columns: 1fr; }
+    .equipo-grid { grid-template-columns: repeat(2, 1fr); }
+    .reg-grid { grid-template-columns: 1fr; }
+    .layer { flex-direction: column; align-items: flex-start; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .divider { margin: 0 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Fin<span>Cloud</span> Boyacá</div>
+  <ul class="nav-links">
+    <li><a href="#proyecto">Proyecto</a></li>
+    <li><a href="#arquitectura">Arquitectura</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#regulacion">Regulación</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Cloud Summit UPTC 2026</div>
+    <h1 class="fade-in">
+      Infraestructura<br>
+      <span class="highlight">cloud híbrida</span><br>
+      para CoopBoyacá
+    </h1>
+    <p class="hero-desc fade-in">
+      Diseñamos y desplegamos una arquitectura cloud híbrida para una cooperativa 
+      financiera boyacense, combinando Proxmox VE on-premise con Microsoft Azure, 
+      garantizando cumplimiento regulatorio y continuidad del negocio.
+    </p>
+    <a href="#proyecto" class="hero-cta fade-in">
+      Ver el proyecto
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROYECTO -->
+<section id="proyecto">
+  <p class="section-label">El proyecto</p>
+  <h2>Transformación digital<br>del sector Fintech cooperativo</h2>
+  <p class="section-sub">
+    Startup de consultoría cloud enfocada en modernizar la infraestructura tecnológica 
+    de cooperativas financieras en Boyacá, resolviendo problemas reales de escalabilidad, 
+    cumplimiento y continuidad.
+  </p>
+
+  <div class="proyecto-grid">
+    <div class="proyecto-card">
+      <div class="card-icon">🏦</div>
+      <div class="card-title">Cliente: CoopBoyacá Ahorro y Crédito</div>
+      <div class="card-text">
+        Cooperativa financiera con sede en Tunja, 4.800 asociados activos y un 
+        servidor principal al 78% de capacidad en horas pico. Vigilada por la 
+        Supersolidaria con hallazgos regulatorios activos a resolver antes de diciembre de 2026.
+      </div>
+      <span class="tag">Fintech / Cooperativa</span>
+    </div>
+
+    <div class="proyecto-card">
+      <div class="card-icon">⚙️</div>
+      <div class="card-title">Solución propuesta</div>
+      <div class="card-text">
+        Arquitectura de nube híbrida que combina Proxmox VE on-premise en Tunja 
+        con servicios de Microsoft Azure. Los componentes regulados permanecen 
+        bajo control nacional; el portal web y backup escalan en Azure.
+      </div>
+      <span class="tag">Nube híbrida</span>
+    </div>
+
+    <div class="proyecto-card">
+      <div class="card-icon">📋</div>
+      <div class="card-title">Problema principal</div>
+      <div class="card-text">
+        Servidor físico único sin contingencia, RPO de 24 horas y RTO indefinido. 
+        Módulo SARLAFT que no genera reportes ROS en los tiempos exigidos. 
+        Presupuesto insuficiente para reposición de hardware ($120M COP).
+      </div>
+    </div>
+
+    <div class="proyecto-card">
+      <div class="card-icon">✅</div>
+      <div class="card-title">Resultado esperado</div>
+      <div class="card-text">
+        RPO menor a 1 hora, RTO menor a 4 horas, cumplimiento de Circular 007 
+        y SARLAFT, reducción de costos de infraestructura y liberación del equipo 
+        de TI del mantenimiento reactivo.
+      </div>
+    </div>
+
+    <div class="proyecto-card full">
+      <div class="card-icon">💰</div>
+      <div class="card-title">Argumento CapEx → OpEx</div>
+      <div class="card-text">
+        La cooperativa no puede asumir una inversión de capital superior a $50M COP sin afectar su índice de solvencia regulatorio. 
+        Con la arquitectura híbrida, Proxmox corre sobre el hardware existente durante la transición y las cargas que demandan 
+        más capacidad se delegan a Azure en modalidad de pago mensual. El servidor principal ($120M COP) se reemplaza por 
+        una suscripción predecible que el equipo financiero puede presentar ante la asamblea de delegados con precisión mensual.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ARQUITECTURA -->
+<section id="arquitectura" class="arq-section">
+  <p class="section-label">Arquitectura</p>
+  <h2>Tres capas de procesamiento</h2>
+  <p class="section-sub">
+    La arquitectura distribuye el procesamiento según el alcance geográfico 
+    de cada operación, desde la sede física hasta entidades nacionales.
+  </p>
+
+  <div class="layers">
+    <div class="layer">
+      <div class="layer-badge edge">Edge</div>
+      <div class="layer-info">
+        <div class="layer-title">Procesamiento local — Sede Tunja</div>
+        <div class="layer-desc">Proxmox VE on-premise · datos nunca salen del edificio · SLA &lt; 3 s en ventanilla</div>
+      </div>
+      <div class="layer-components">
+        <span class="chip">Core SICO</span>
+        <span class="chip">SARLAFT</span>
+        <span class="chip">BD asociados</span>
+        <span class="chip">Logs auditoría</span>
+        <span class="chip">Terminal ventanilla</span>
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="layer-badge fog">Fog</div>
+      <div class="layer-info">
+        <div class="layer-title">Procesamiento regional — Azure Colombia</div>
+        <div class="layer-desc">Servicios sin datos críticos · acceso remoto de asociados desde cualquier municipio de Boyacá</div>
+      </div>
+      <div class="layer-components">
+        <span class="chip">Portal web</span>
+        <span class="chip">Consulta de saldo</span>
+        <span class="chip">Backup cifrado</span>
+        <span class="chip">Entra ID</span>
+      </div>
+    </div>
+
+    <div class="layer">
+      <div class="layer-badge cloud">Cloud</div>
+      <div class="layer-info">
+        <div class="layer-title">Alcance nacional — Entidades regulatorias</div>
+        <div class="layer-desc">Integración con entidades nacionales · reportes regulatorios · gestión de identidad global</div>
+      </div>
+      <div class="layer-components">
+        <span class="chip">Supersolidaria</span>
+        <span class="chip">Reportes ROS</span>
+        <span class="chip">Entra ID global</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REGULACION -->
+<section id="regulacion">
+  <p class="section-label">Marco regulatorio</p>
+  <h2>Cumplimiento normativo</h2>
+  <p class="section-sub">
+    La arquitectura está diseñada para cumplir punto a punto con la regulación 
+    colombiana aplicable al sector financiero cooperativo.
+  </p>
+
+  <div class="reg-grid">
+    <div class="reg-card">
+      <div class="reg-nombre">Circular 007 — Supersolidaria</div>
+      <div class="reg-desc">
+        Exige logs de auditoría inmutables y trazabilidad completa de todas las 
+        transacciones, disponibles para inspección en cualquier momento. 
+        Implementado mediante contenedor LXC con logs inmutables en Proxmox.
+      </div>
+    </div>
+
+    <div class="reg-card">
+      <div class="reg-nombre">SARLAFT</div>
+      <div class="reg-desc">
+        Requiere detección automática de operaciones inusuales y generación de 
+        Reportes de Operación Sospechosa (ROS) dentro de las 24 horas siguientes. 
+        Los datos de riesgo crediticio no pueden salir del territorio colombiano.
+      </div>
+    </div>
+
+    <div class="reg-card">
+      <div class="reg-nombre">Ley 1581 de 2012</div>
+      <div class="reg-desc">
+        Régimen general de protección de datos personales. Aplica a los 4.800 
+        asociados de CoopBoyacá. Todos los datos personales permanecen en 
+        infraestructura Proxmox dentro del territorio nacional.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EQUIPO -->
+<section id="equipo">
+  <p class="section-label">El equipo</p>
+  <h2>FinCloud Boyacá</h2>
+  <p class="section-sub">
+    Startup de consultoría cloud fundada el 20 de abril de 2026. 
+    Universidad Pedagógica y Tecnológica de Colombia — Ingeniería de Sistemas.
+  </p>
+
+  <div class="equipo-grid">
+    <div class="miembro fade-in">
+      <div class="avatar">DC</div>
+      <div class="miembro-nombre">David Cubillos</div>
+      <div class="miembro-rol">Arquitecto Cloud</div>
+      <div class="miembro-resp">Diseño del diagrama arquitectónico, modelo de despliegue y asignación de modelos de servicio</div>
+    </div>
+
+    <div class="miembro fade-in">
+      <div class="avatar">WA</div>
+      <div class="miembro-nombre">Walter Alfonso</div>
+      <div class="miembro-rol">Ingeniero Cloud</div>
+      <div class="miembro-resp">Implementación del prototipo con Proxmox, repositorio GitHub y portal web</div>
+    </div>
+
+    <div class="miembro fade-in">
+      <div class="avatar">BC</div>
+      <div class="miembro-nombre">Brayan Cifuentes</div>
+      <div class="miembro-rol">Consultor de Negocio</div>
+      <div class="miembro-resp">Investigación regulatoria, hoja de costos CapEx/OpEx e informe técnico</div>
+    </div>
+
+    <div class="miembro fade-in">
+      <div class="avatar">JG</div>
+      <div class="miembro-nombre">Johan Gil</div>
+      <div class="miembro-rol">Gerente del Proyecto</div>
+      <div class="miembro-resp">Coordinación de reuniones, plan de trabajo y logística del Cloud Summit</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Fin<span>Cloud</span> Boyacá</div>
+  <div class="footer-text">
+    Cloud Summit UPTC 2026 · Transformación Digital Sectorial: de Boyacá a la Nube<br>
+    Ingeniería de Sistemas y Computación · UPTC Tunja
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/JohanGil1502" target="_blank">GitHub</a>
+    <a href="#proyecto">Proyecto</a>
+    <a href="#equipo">Equipo</a>
+  </div>
+</footer>
+
+</body>
+</html>
