@@ -103,7 +103,7 @@ En la interfaz web de Proxmox:
 2. Clic en **Create VM** y configurar:
    - **Name:** `ubuntu-base`
    - **ISO:** Ubuntu Server 22.04
-   - **Disk:** 2 GB
+   - **Disk:** 32 GB
    - **CPU:** 2 core
    - **Memory:** 4096 MB
    - **Network:** bridge `vmbr0`
